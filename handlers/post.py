@@ -77,7 +77,7 @@ async def cmd_post(message: Message):
     ])
 
     await message.bot.send_message(
-        chat_id=NOTIFY_CHAT_ID,
+        chat_id="@snt_dolg",
         text=text,
         reply_markup=keyboard,
     )
