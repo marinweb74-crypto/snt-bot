@@ -6,7 +6,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import BOT_TOKEN
 from db import create_pool, close_pool, create_tables
-from handlers import start, survey
+from handlers import start, survey, post
 
 logging.basicConfig(level=logging.INFO)
 
@@ -20,6 +20,7 @@ async def main():
 
     dp.include_router(start.router)
     dp.include_router(survey.router)
+    dp.include_router(post.router)
 
     try:
         await dp.start_polling(bot)
