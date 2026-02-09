@@ -1,7 +1,10 @@
 import re
+import logging
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
+
+logger = logging.getLogger(__name__)
 
 from states import SurveyStates
 from keyboards import (
@@ -350,8 +353,11 @@ async def on_q10(message: Message, state: FSMContext):
     from handlers.notify import send_notification
 
     data = await state.get_data()
-    survey_id = await save_survey(data)
-    await send_notification(message.bot, data, survey_id)
+    try:
+        survey_id = await save_survey(data)
+        await send_notification(message.bot, data, survey_id)
+    except Exception as e:
+        logger.error(f"Error saving survey: {e}")
 
     await message.answer(
         "Спасибо за предоставленную информацию!\n"
